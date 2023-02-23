@@ -10,7 +10,7 @@ import java.util.List;
 public class StudentRepository {
     private HashMap<String , Student> studentrecord ;
     private HashMap<String , Teacher> teacherrecord ;
-    private HashMap<Teacher , List<Student>> pair;
+    private HashMap<String , List<String>> pair;
 
     public StudentRepository() {
         this.studentrecord=new HashMap<>();
@@ -25,19 +25,15 @@ public class StudentRepository {
         teacherrecord.put(teacher.getName(),teacher);
     }
     public void addStudentTeacherPair(String sname, String tname){
-        Teacher teacher = teacherrecord.get(tname);
-        if(pair.containsKey(teacher)){
-            List<Student> list= pair.get(teacher);
-            pair.remove(teacher);
-            Student student = studentrecord.get(sname);
-            list.add(student);
-            pair.put(teacher,list);
-        }
-        else{
-            List<Student> list = new ArrayList<>();
-            Student student = studentrecord.get(sname);
-            list.add(student);
-            pair.put(teacher,list);
+        if(studentrecord.containsKey(sname) && teacherrecord.containsKey(tname)){
+            studentrecord.put(sname,studentrecord.get(sname));
+            teacherrecord.put(tname,teacherrecord.get(tname));
+            List<String> list = new ArrayList<>();
+            if(pair.containsKey(tname)){
+                list=pair.get(tname);
+            }
+            list.add(sname);
+            pair.put(tname,list);
         }
     }
     public Student getStudentByName(String name){
@@ -47,29 +43,31 @@ public class StudentRepository {
         return teacherrecord.get(name);
     }
     public List<String> getStudentsByTeacherName(String tname){
-        Teacher teacher = teacherrecord.get(tname);
         List<String> list = new ArrayList<>();
-        if(!pair.containsKey(teacher)){
-            return list;
-        }
-        List<Student> studentlist = pair.get(teacher);
-        for(Student student : studentlist){
-            list.add(student.getName());
-        }
-        return list;
-    }
-    public List<String> getAllStudents(){
-        List<String> list = new ArrayList<>();
-        for(String sname : studentrecord.keySet()){
-            list.add(studentrecord.get(sname).getName());
+        if(pair.containsKey(tname)){
+            list=pair.get(tname);
         }
         return list;
 
     }
+    public List<String> getAllStudents(){
+        return new ArrayList<>(studentrecord.keySet());
+
+    }
     public void deleteTeacherByName(String tname){
-        Teacher teacher = teacherrecord.get(tname);
-        teacherrecord.remove(tname);
-        pair.remove(teacher);
+        List<String> list =new ArrayList<>();
+        if(pair.containsKey(tname)){
+            list= pair.get(tname);
+            for(String name : list){
+                if(studentrecord.containsKey(name)){
+                    studentrecord.remove(name);
+                }
+            }
+            pair.remove(tname);
+        }
+        if(pair.containsKey(tname)){
+            teacherrecord.remove(tname);
+        }
 
     }
 
