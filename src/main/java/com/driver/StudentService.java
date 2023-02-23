@@ -11,31 +11,31 @@ public class StudentService {
     @Autowired
     StudentRepository studentRepository;
 
-    void addStudent(Student student){
+    public void addStudent(Student student){
         studentRepository.addStudent(student);
     }
-    void addTeacher(Teacher teacher){
+    public void addTeacher(Teacher teacher){
         studentRepository.addTeacher(teacher);
     }
-    void addStudentTeacherPair(String sname, String tname){
+    public void addStudentTeacherPair(String sname, String tname){
         studentRepository.addStudentTeacherPair(sname,tname);
     }
-    Student getStudentByName(String name){
+    public Student getStudentByName(String name){
         return studentRepository.getStudentByName(name);
     }
-    Teacher getTeacherByName(String name){
+    public Teacher getTeacherByName(String name){
         return studentRepository.getTeacherByName(name);
     }
-    List<String> getStudentsByTeacherName(String name){
+    public List<String> getStudentsByTeacherName(String name){
         return studentRepository.getStudentsByTeacherName(name);
     }
-    List<String> getAllStudents(){
+    public List<String> getAllStudents(){
         return studentRepository.getAllStudents();
     }
-    void deleteTeacherByName(String tname){
+    public void deleteTeacherByName(String tname){
         studentRepository.deleteTeacherByName(tname);
     }
-    void deleteAllTeachers(){
+    public void deleteAllTeachers(){
         studentRepository.deleteAllTeachers();
     }
 }
