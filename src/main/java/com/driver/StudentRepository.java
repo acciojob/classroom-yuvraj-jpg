@@ -42,11 +42,15 @@ public class StudentRepository {
     List<String> getStudentsByTeacherName(String tname){
         Teacher teacher = teacherrecord.get(tname);
         List<String> list = new ArrayList<>();
-        List<Student> student = pair.get(teacher);
-        for(Student x : student){
-            list.add(x.getName());
+        if(!pair.containsKey(teacher)){
+            return list;
+        }
+        List<Student> studentlist = pair.get(teacher);
+        for(Student student : studentlist){
+            list.add(student.getName());
         }
         return list;
+
     }
     List<String> getAllStudents(){
         List<String> list = new ArrayList<>();
