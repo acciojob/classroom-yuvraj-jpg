@@ -8,9 +8,16 @@ import java.util.List;
 
 @Repository
 public class StudentRepository {
-    HashMap<String , Student> studentrecord = new HashMap<>();
-    HashMap<String , Teacher> teacherrecord = new HashMap<>();
-    HashMap<Teacher , List<Student>> pair = new HashMap<>();
+    private HashMap<String , Student> studentrecord = new HashMap<>();
+    private HashMap<String , Teacher> teacherrecord = new HashMap<>();
+    private HashMap<Teacher , List<Student>> pair = new HashMap<>();
+
+    public StudentRepository() {
+        this.studentrecord=new HashMap<>();
+        this.teacherrecord=new HashMap<>();
+        this.pair = new HashMap<>();
+    }
+
     public void addStudent(Student student){
         studentrecord.put(student.getName(),student);
     }
